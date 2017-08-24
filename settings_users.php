@@ -73,9 +73,12 @@ if($result === false) {
 		    <!-- Main navigation -->
 		    <ul id="side-nav" class="main-menu navbar-collapse collapse">
 			    <li><a href="index.php"><i class="icon-gauge"></i><span class="title">Dashboard</span></a></li>
+			    <li><a href="watch.php" target="_blank"><i class="icon-location"></i><span class="title">Clocks Location</span></a></li>
+			    <?php if ($user_settings['level'] > 10): ?>
 			    <li class="has-sub"><a href="javascript:void(0);"><i class="icon-target"></i><span class="title">Tools</span></a>
 				    <ul class="nav collapse">
 					    <li><a href="rtu_tools.php"><span class="title">RTU Tools</span></a></li>
+					    <li><a href="rtu_input.php"><span class="title">RTU Input</span></a></li>
 				    </ul>
 			    </li>
 			    <li class="has-sub active"><a href="javascript:void(0);"><i class="icon-cog"></i><span class="title">Settings</span></a>
@@ -84,7 +87,7 @@ if($result === false) {
 					    <li class="active"><a href="settings_users.php"><span class="title">Users</span></a></li>
 				    </ul>
 			    </li>
-
+                <?php endif; ?>
 		    </ul>
 		    <!-- /main navigation -->		
         </div>
@@ -205,15 +208,15 @@ if($result === false) {
 								    <table class="table table-striped table-bordered table-hover table-condensed users">
 									    <thead>
 										    <tr>
-											    <th>USERNAME</th>
-											    <th>NAME</th>
-											    <th>PHONE</th>
-											    <th>EMAIL</th>
-											    <th>ACCESS</th>
-											    <th>LEVEL</th>
-											    <th>STATUS</th>
-											    <th>LAST LOGIN</th>
-											    <th>CONTROLS</th>
+											    <th>username</th>
+											    <th>name</th>
+											    <th>phone</th>
+											    <th>email</th>
+											    <th>access</th>
+											    <th>level</th>
+											    <th>status</th>
+											    <th>last_login</th>
+											    <th>controls</th>
 										    </tr>
 									    </thead>
 									    <tbody>
@@ -282,15 +285,15 @@ if($result === false) {
 									    </tbody>
 									    <tfoot>
 										    <tr>
-											    <td>USERNAME</td>
-											    <td>PHONE</td>
-											    <td>NAME</td>
-											    <td>EMAIL</td>
-											    <td>ACCESS</td>
-											    <td>LEVEL</td>
-											    <td>STATUS</td>
-											    <td>LAST LOGIN</td>
-											    <td>CONTROLS</td>
+											    <td>username</td>
+											    <td>phone</td>
+											    <td>name</td>
+											    <td>email</td>
+											    <td>access</td>
+											    <td>level</td>
+											    <td>status</td>
+											    <td>last_login</td>
+											    <td>controls</td>
 										    </tr>
 									    </tfoot>
 								    </table>

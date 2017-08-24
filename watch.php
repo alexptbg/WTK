@@ -132,6 +132,12 @@ include("inc/config.php");
                             </div>
                         </li>
                         
+                        <li>
+                            <div class="imagehotspot-container" id="others" style="position: relative; width: 100%; height: auto; z-index: 101; overflow: hidden">
+								<img src="watch/img/others.jpg" class="others" />
+                                <div></div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
 
@@ -239,8 +245,18 @@ include("inc/config.php");
         
         //js templatename //info: HuskyBlue //danger: HotRed //warning: MustardSun //success: PaleMint
         //hotspot classes //info: bluehotspot //danger: redhotspot //warning: orangehotspot //success: greenhotspot
+        
+        function isEven(value) {
+	        if (value%2 == 0) {
+		        return true;
+	        } else {
+		        return false;
+		    }
+        }
+        
+        //boss 1
         $.ajax({
-            url: "ajax/watch.php",
+            url: "ajax/watch.php?slider_no=1",
             dataType: "json",
             type: "GET",
             contentType: "application/json",
@@ -249,10 +265,11 @@ include("inc/config.php");
                 var elements = [];
                 var tips = [];
                 var templates = [];
+                var x = 0;
                 //loop
                 $.each(data, function (i,res){
                     //console.log(res);
-                    div += '<div class="'+res.spotcolor+' blink" id="b1hotspot'+res.id+'" style="position:absolute; z-index:103; width:18px; height:14px; top:'+res.mapy+'%; left:'+res.mapx+'%;"></div>';
+                    div += '<div class="'+res.spotcolor+' blink" id="b1hotspot'+res.id+'" style="position:absolute; z-index:103; width:14px; height:14px; top:'+res.mapy+'%; left:'+res.mapx+'%;"></div>';
                     elements[i] = '#b1hotspot'+res.id;
                     templates[i] = res.template;
                     tips[i] = '<div class="template">' +
@@ -269,19 +286,151 @@ include("inc/config.php");
                                 '<strong>TTY:</strong> '+res.tty+' / '+res.ttydevice+'<br/>' +
                                 '<strong>SOCKET:</strong> '+res.socket+'<br/>' +
                                 '<strong>PING:</strong> '+res.ping+'<br/>' +
+                                '<strong>REVISION:</strong> '+res.revision+'<br/>' +
                                 '<strong>CARDS:</strong> '+res.reads+'</p>' +
                             '</div>';
                 });
                 $("#b1 div").html(div);
                 $(elements).each(function(i,element) {
+                	var ipos = 'left';
+                	if (isEven(i)) {
+						ipos = 'left';
+					} else {
+						ipos = 'right';
+					}
                     $(element).LiteTooltip({
-                        location: 'right',
+                        location: ipos,
                         textalign: 'left',
                         templatename: templates[i],
                         trigger: 'hoverable',
                         padding: 5,
                         title: tips[i]
                     });
+                    x++;
+                });
+            },
+            error: function(jqXhr,textStatus,errorThrown){
+                console.log(errorThrown);
+            },
+            timeout: 3000,
+            cache: false
+        });
+        
+        //boss 2
+        $.ajax({
+            url: "ajax/watch.php?slider_no=2",
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json",
+            success: function(data,textStatus,jQxhr){
+                var div = "";
+                var elements = [];
+                var tips = [];
+                var templates = [];
+                var x = 0;
+                //loop
+                $.each(data, function (i,res){
+                    //console.log(res);
+                    div += '<div class="'+res.spotcolor+' blink" id="b2hotspot'+res.id+'" style="position:absolute; z-index:103; width:14px; height:14px; top:'+res.mapy+'%; left:'+res.mapx+'%;"></div>';
+                    elements[i] = '#b2hotspot'+res.id;
+                    templates[i] = res.template;
+                    tips[i] = '<div class="template">' +
+                                '<h4><strong>CLOCK '+res.inv+'</strong></h4>' +
+                                '<p style="padding:5px; font-size:11px; line-height:16px;"><strong>DATE TIME:</strong> '+res.dtime+'<br/>' +
+                                '<strong>SERIAL NO:</strong> '+res.serial+'<br/>' +
+                                '<strong>IP ADDRESS:</strong> '+res.ip+'<br/>' +
+                                '<strong>IP STATUS:</strong> '+res.ipstatus+'<br/>' +
+                                '<strong>CPU TEMP:</strong> '+res.cputemp+'<br/>' +
+                                '<strong>TIMESTAMP:</strong> '+res.timestamp+'<br/>' +
+                                '<strong>TIME:</strong> '+res.shelltime+' / '+res.phptime+'<br/>' +
+                                '<strong>TEMP IN:</strong> '+res.tempin+'<br/>' +
+                                '<strong>SENSOR:</strong> '+res.tempsensor+'<br/>' +
+                                '<strong>TTY:</strong> '+res.tty+' / '+res.ttydevice+'<br/>' +
+                                '<strong>SOCKET:</strong> '+res.socket+'<br/>' +
+                                '<strong>PING:</strong> '+res.ping+'<br/>' +
+                                '<strong>REVISION:</strong> '+res.revision+'<br/>' +
+                                '<strong>CARDS:</strong> '+res.reads+'</p>' +
+                            '</div>';
+                });
+                $("#b2 div").html(div);
+                $(elements).each(function(i,element) {
+                	var ipos = 'left';
+                	if (isEven(i)) {
+						ipos = 'left';
+					} else {
+						ipos = 'right';
+					}
+                    $(element).LiteTooltip({
+                        location: ipos,
+                        textalign: 'left',
+                        templatename: templates[i],
+                        trigger: 'hoverable',
+                        padding: 5,
+                        title: tips[i]
+                    });
+                    x++;
+                });
+            },
+            error: function(jqXhr,textStatus,errorThrown){
+                console.log(errorThrown);
+            },
+            timeout: 3000,
+            cache: false
+        });
+        
+        //others
+        $.ajax({
+            url: "ajax/watch.php?slider_no=5",
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json",
+            success: function(data,textStatus,jQxhr){
+                var div = "";
+                var elements = [];
+                var tips = [];
+                var templates = [];
+                var x = 0;
+                //loop
+                $.each(data, function (i,res){
+                    //console.log(res);
+                    div += '<div class="'+res.spotcolor+' blink" id="othershotspot'+res.id+'" style="position:absolute; z-index:103; width:14px; height:14px; top:'+res.mapy+'%; left:'+res.mapx+'%;"></div>';
+                    elements[i] = '#othershotspot'+res.id;
+                    templates[i] = res.template;
+                    tips[i] = '<div class="template">' +
+                                '<h4><strong>CLOCK '+res.inv+'</strong></h4>' +
+                                '<p style="padding:5px; font-size:11px; line-height:16px;"><strong>DATE TIME:</strong> '+res.dtime+'<br/>' +
+                                '<strong>SERIAL NO:</strong> '+res.serial+'<br/>' +
+                                '<strong>IP ADDRESS:</strong> '+res.ip+'<br/>' +
+                                '<strong>IP STATUS:</strong> '+res.ipstatus+'<br/>' +
+                                '<strong>CPU TEMP:</strong> '+res.cputemp+'<br/>' +
+                                '<strong>TIMESTAMP:</strong> '+res.timestamp+'<br/>' +
+                                '<strong>TIME:</strong> '+res.shelltime+' / '+res.phptime+'<br/>' +
+                                '<strong>TEMP IN:</strong> '+res.tempin+'<br/>' +
+                                '<strong>SENSOR:</strong> '+res.tempsensor+'<br/>' +
+                                '<strong>TTY:</strong> '+res.tty+' / '+res.ttydevice+'<br/>' +
+                                '<strong>SOCKET:</strong> '+res.socket+'<br/>' +
+                                '<strong>PING:</strong> '+res.ping+'<br/>' +
+                                '<strong>REVISION:</strong> '+res.revision+'<br/>' +
+                                '<strong>CARDS:</strong> '+res.reads+'</p>' +
+                            '</div>';
+                });
+                $("#others div").html(div);
+                $(elements).each(function(i,element) {
+                	var ipos = 'left';
+                	if (isEven(i)) {
+						ipos = 'left';
+					} else {
+						ipos = 'right';
+					}
+                    $(element).LiteTooltip({
+                        location: ipos,
+                        textalign: 'left',
+                        templatename: templates[i],
+                        trigger: 'hoverable',
+                        padding: 5,
+                        title: tips[i]
+                    });
+                    x++;
                 });
             },
             error: function(jqXhr,textStatus,errorThrown){

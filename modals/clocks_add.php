@@ -13,9 +13,15 @@ include("../inc/config.php");
 		</div> 
 	</div>
 	<div class="form-group"> 
+		<label class="col-sm-3 control-label">PLACE</label> 
+		<div class="col-sm-9"> 
+			<input type="text" class="form-control validate[required]" name="place" id="place" /> 
+		</div> 
+	</div>
+	<div class="form-group"> 
 		<label class="col-sm-3 control-label">IP ADDRESS</label> 
 		<div class="col-sm-9"> 
-			<input type="text" class="form-control validate[required,custom[ipv4]]" name="ip" id="ip" value="<?php if(isset($_GET['ip'])) { echo $_GET['ip']; } ?>"/> 
+			<input type="text" class="form-control validate[required,custom[ipv4]]" name="ip" id="ip" value="<?php if(isset($_GET['ip'])) { echo $_GET['ip']; } ?>" /> 
 		</div> 
 	</div>
 	<div class="form-group"> 
@@ -169,6 +175,7 @@ include("../inc/config.php");
       	//validated
       	e.preventDefault();
 		var inv = jQuery("input[name='inv']").val();
+		var place = jQuery("input[name='place']").val();
 		var ip = jQuery("input[name='ip']").val();
 		var serialnumber = jQuery("input[name='serialnumber']").val();
 		var RTU_GRP = jQuery("select[name='RTU_GRP']").val();
@@ -182,7 +189,7 @@ include("../inc/config.php");
         var mapx = jQuery("input[name='mapx']").val();
         var mapy = jQuery("input[name='mapy']").val();
         //build string data
-        var datastr = '&inv='+inv+'&ip='+ip+'&serialnumber='+serialnumber+'&RTU_GRP='+RTU_GRP+'&GRP='+GRP+'&building='+building+'&floor='+flor+'&groupnr='+groupnr+'&art_no='+art_no+'&track='+track+'&mounted='+mounted+'&mapx='+mapx+'&mapy='+mapy;
+        var datastr = '&inv='+inv+'&ip='+ip+'&place='+place+'&serialnumber='+serialnumber+'&RTU_GRP='+RTU_GRP+'&GRP='+GRP+'&building='+building+'&floor='+flor+'&groupnr='+groupnr+'&art_no='+art_no+'&track='+track+'&mounted='+mounted+'&mapx='+mapx+'&mapy='+mapy;
         //console.log(datastr);
         send(datastr);
       } else {

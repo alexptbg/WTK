@@ -7,7 +7,7 @@ echo $now."<br/>";
 $offset = 25;
 
 //mysql
-$link = mysqli_connect("192.168.0.210","pi","a11543395","raspi");
+$link = mysqli_connect("127.0.0.1","replication","slavex","raspi");
 
 if (!$link) {
     echo "Error: Unable to connect to MySQL.<br/>";

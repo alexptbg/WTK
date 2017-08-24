@@ -332,7 +332,11 @@ function array2table($arr) {
             $col = 1;
             while (false !== ($curr_field = current($curr_row))) {
                 echo "<td>";
-                echo $curr_field."&nbsp;";
+                if ($curr_field instanceof DateTime) {
+					echo $curr_field->format('Y-m-d H:i:s')."&nbsp;";
+				} else {
+					echo $curr_field."&nbsp;";
+				}
                 echo "</td>\n";
                 next($curr_row);
                 $col++;

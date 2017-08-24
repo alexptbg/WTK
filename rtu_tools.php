@@ -12,12 +12,15 @@ if (isset($_POST['submit'])) {
         $from = $_POST['from'];
     } else if($_POST['submit'] == 'search') {
 	    $name = $_POST['name'];
+    } else if($_POST['submit'] == 'info') {
+	    $pin = $_POST['pin'];
     }
 } else {
     $what = "";
     $value = "";
     $from = "";
     $name = "";
+    $pin = "";
 }
 ?>
 <!DOCTYPE html>
@@ -73,9 +76,12 @@ if (isset($_POST['submit'])) {
 		    <!-- Main navigation -->
 		    <ul id="side-nav" class="main-menu navbar-collapse collapse">
 			    <li><a href="index.php"><i class="icon-gauge"></i><span class="title">Dashboard</span></a></li>
+			    <li><a href="watch.php" target="_blank"><i class="icon-location"></i><span class="title">Clocks Location</span></a></li>
+			    <?php if ($user_settings['level'] > 10): ?>
 			    <li class="has-sub active"><a href="javascript:void(0);"><i class="icon-target"></i><span class="title">Tools</span></a>
 				    <ul class="nav collapse">
 					    <li class="active"><a href="rtu_tools.php"><span class="title">RTU Tools</span></a></li>
+					    <li><a href="rtu_input.php"><span class="title">RTU Input</span></a></li>
 				    </ul>
 			    </li>
 			    <li class="has-sub"><a href="javascript:void(0);"><i class="icon-cog"></i><span class="title">Settings</span></a>
@@ -84,7 +90,7 @@ if (isset($_POST['submit'])) {
 					    <li><a href="settings_users.php"><span class="title">Users</span></a></li>
 				    </ul>
 			    </li>
-
+                <?php endif; ?>
 		    </ul>
 		    <!-- /main navigation -->		
         </div>
@@ -227,7 +233,7 @@ if (isset($_POST['submit'])) {
                                 <?php
                                 if((isset($_POST['submit'])) && ($_POST['submit'] == 'submit')) {
                                     try {
-                                        $pdo = new PDO ("dblib:host=$hostname:$port;dbname=$dbname;","$username","$pw");
+                                        $pdo = new PDO ("dblib:charset=UTF-8;host=$hostname:$port;dbname=$dbname;","$username","$pw");
 										$stmt = $pdo->prepare("SELECT * FROM ".$from." WHERE ".$what."='".$value."'");
                                         if ($stmt->execute()) {
 											$count = $stmt->rowCount();
@@ -263,12 +269,13 @@ if (isset($_POST['submit'])) {
 			        </div>
 		        </div>
 		        <!-- /row -->
+
 		        <!-- row -->
 		        <div class="row">
 			        <div class="col-lg-12">
 					    <div class="panel panel-primary">
 						    <div class="panel-heading clearfix">
-							    <h4 class="panel-title text-uppercase"><i class="fa fa-search" aria-hidden="true"></i>Search by name</h4>
+							    <h4 class="panel-title text-uppercase"><i class="fa fa-search" aria-hidden="true"></i>SEARCH</h4>
 						    </div>
 						    <div class="panel-body">
                                 <form id="forms" class="form-horizontal" method="post" action="">
@@ -290,7 +297,7 @@ if (isset($_POST['submit'])) {
                                 <?php
                                 if((isset($_POST['submit'])) && ($_POST['submit'] == 'search')) {
                                     try {
-                                        $pdo = new PDO ("dblib:host=$hostname:$port;dbname=$dbname;","$username","$pw");
+                                        $pdo = new PDO ("dblib:charset=UTF-8;host=$hostname:$port;dbname=$dbname;","$username","$pw");
 										$stmt = $pdo->prepare("SELECT * FROM PERSON_ID_MOD WHERE FULL_NAME LIKE '%".$name."%' ORDER BY PIN DESC");
                                         if ($stmt->execute()) {
 											$count = $stmt->rowCount();
@@ -318,7 +325,35 @@ if (isset($_POST['submit'])) {
 										echo "Failed to get DB handle: " . $e->getMessage() . "\n";
 									}
 									unset($stmt);
-									unset($pdo); 
+									unset($pdo);
+									/*
+                                    $connectionInfo = array("UID" => $username, "PWD" => $pw, "Database"=>$dbname, "CharacterSet" => "UTF-8");
+                                    $conn = sqlsrv_connect($hostname,$connectionInfo);
+                                    if(!$conn) {
+                                        echo "Connection could not be established.<br/>";
+                                        die(print_r(sqlsrv_errors(),true));
+                                    }
+                                    $sql = "SELECT * FROM PERSON_ID_MOD WHERE FULL_NAME LIKE '%".$name."%' ORDER BY PIN DESC";
+                                    $stmt = sqlsrv_query($conn,$sql);
+                                    if($stmt === false) {
+                                        die(print_r(sqlsrv_errors(),true));
+                                    }
+                                    $data = array();
+                                    while($row = sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC)) {
+                                        $data[] = $row;
+                                    }
+									if (!empty($data)) {
+										array2table($data);
+									} else {
+									    echo "
+                                        <div id=\"error5\">
+                                            <br/>
+                                            <div class=\"alert alert-danger\" role=\"alert\">
+                                                <strong>ERROR!</strong> PIN nOR CARD_NO is not valid.
+                                            </div>
+                                        </div>";	
+									}
+									*/
 								}
                                 ?>
 							</div>
@@ -326,6 +361,109 @@ if (isset($_POST['submit'])) {
 			        </div>
 		        </div>
 		        <!-- /row -->
+
+		        <!-- row -->
+		        <div class="row">
+			        <div class="col-lg-12">
+					    <div class="panel panel-primary">
+						    <div class="panel-heading clearfix">
+							    <h4 class="panel-title text-uppercase"><i class="fa fa-search" aria-hidden="true"></i>PIN information</h4>
+						    </div>
+						    <div class="panel-body">
+                                <form id="forms" class="form-horizontal" method="post" action="">
+	                                <div class="form-group"> 
+		                                <label class="col-sm-2 control-label">PIN</label>
+		                                <div class="col-sm-2">
+											<?php if((isset($_POST['submit'])) && ($_POST['submit'] == 'info')): ?>
+											<input type="text" class="form-control validate[required]" name="pin" id="pin" value="<?php echo $pin; ?>" /> 
+											<?php else: ?>
+											<input type="text" class="form-control validate[required]" name="pin" id="pin" value="" />  
+											<?php endif; ?>
+	                                    </div>
+		                                <div class="col-sm-3"> 
+                                            <button type="submit" class="btn btn-primary" name="submit" id="submit" value="info">
+												<i class="fa fa-share-square-o" aria-hidden="true"></i>&nbsp;GO</button>
+	                                    </div> 
+	                                </div>
+	                            </form>
+                                <?php
+                                if((isset($_POST['submit'])) && ($_POST['submit'] == 'info')) {
+                                    try {
+                                        $pdo = new PDO ("dblib:charset=UTF-8;host=$qserver:$port;dbname=$qdb;","$quid","$qpwd");
+										$stmt = $pdo->prepare("SELECT PIN,Name,StartDate,PhoneNumber,EGN,GrupovPIN FROM Workers WHERE PIN='".$pin."'");
+                                        if ($stmt->execute()) {
+											$count = $stmt->rowCount();
+											$data = array();
+                                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+												if (!empty($row)) {
+												    $data[] = $row;
+												}
+											}
+											if (!empty($data)) {
+										echo "<div class=\"col-sm-2\">";
+                                        echo "<img src=\"img.php?PIN=".$pin."\" class=\"pin_image\" />";
+                                        echo "</div>";
+										echo "<div class=\"col-sm-10\">";
+                                        array2table($data);
+                                        echo "</div>";
+											} else {
+											    echo "
+                                                <div id=\"error5\">
+                                                    <br/>
+                                                    <div class=\"alert alert-danger\" role=\"alert\">
+                                                        <strong>ERROR!</strong> NAME nOR SYNTAX is not valid.
+                                                    </div>
+                                                </div>";	
+											}
+										} else {
+										    echo "error-1";	
+										}
+									} catch (PDOException $e) {
+										echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+									}
+									unset($stmt);
+									unset($pdo);
+									/*
+                                    $connection = array("UID" => $quid, "PWD" => $qpwd, "Database"=>$qdb, "CharacterSet" => "UTF-8");
+                                    $conn1 = sqlsrv_connect($qserver,$connection);
+                                    if(!$conn1) {
+                                        echo "Connection could not be established.<br/>";
+                                        die(print_r(sqlsrv_errors(),true));
+                                    }
+                                    $sql = "SELECT PIN,Name,StartDate,PhoneNumber,EGN,GrupovPIN FROM Workers WHERE PIN='".$pin."'";
+                                    $stmt = sqlsrv_query($conn1,$sql);
+                                    if($stmt === false) {
+                                        die(print_r(sqlsrv_errors(),true));
+                                    }
+                                    $data = array();
+                                    while($row = sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC)) {
+                                        $data[] = $row;
+                                    }
+									if (!empty($data)) {
+										echo "<div class=\"col-sm-2\">";
+                                        echo "<img src=\"img.php?PIN=".$pin."\" class=\"pin_image\" />";
+                                        echo "</div>";
+										echo "<div class=\"col-sm-10\">";
+                                        array2table($data);
+                                        echo "</div>";
+									} else {
+									    echo "
+                                        <div id=\"error5\">
+                                            <br/>
+                                            <div class=\"alert alert-danger\" role=\"alert\">
+                                                <strong>ERROR!</strong> PIN nOR CARD_NO is not valid.
+                                            </div>
+                                        </div>";	
+									}
+									*/
+								}
+                                ?>
+							</div>
+						</div>
+			        </div>
+		        </div>
+		        <!-- /row -->
+
 
 	        </div>
 	        <!-- /main content -->
@@ -545,6 +683,5 @@ if (isset($_POST['submit'])) {
         });
     </script>
     <script type="text/javascript" src="assets/js/loader.js"></script>
-
 </body>
 </html>

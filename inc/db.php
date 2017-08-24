@@ -1,7 +1,8 @@
 <?php
 defined('start') or die ('Direct access not allowed.');
 //server
-define('DB_SERVER',''); // set database host
+//define('DB_SERVER','127.0.0.1'); // set database host
+define('DB_SERVER','');
 define('DB_USER',''); // set database user
 define('DB_PASS',''); // set database password
 define('DB_NAME',''); // set database name
@@ -23,7 +24,13 @@ if (!$local->set_charset("utf8")) {
 //$hostname = "192.168.0.168";
 $hostname = "";
 $port = 1433;
-$dbname = "";
+$dbname = "PIRINTEXDB";
 $username = "";
 $pw = "";
+//Percent DB
+//$qserver = "192.168.0.111";
+$qserver = "";
+$quid = "";
+$qpwd = "";
+$qdb = "Percent";
 ?>

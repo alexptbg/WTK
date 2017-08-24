@@ -20,7 +20,7 @@ if(!empty($devices)){
     echo "              <div class=\"table-responsive\">
 							<table class=\"table table-bordered table-hover table-striped table-condensed\">
 								<thead> 
-									<tr> 
+									<tr>
 										<th>DATE TIME</th> 
 										<th>INV NO</th> 
 										<th>SERIAL NO</th>
@@ -34,10 +34,13 @@ if(!empty($devices)){
 										<th>TTY</th>
 										<th>SOCKET</th>
 										<th>PING</th>
+										<th>REV</th>
 										<th>CARDS</th>
 									</tr> 
 								</thead> 
 								<tbody>";
+	$z=count($devices);
+	$c=0;
     foreach($devices as $device) {
         $query="SELECT * FROM `status` WHERE `dtime` > DATE_SUB(NOW(), INTERVAL 61 SECOND) AND `ip`='".$device['ip']."' ORDER BY `id` DESC LIMIT 1";
         $result=$local->query($query);
@@ -45,9 +48,8 @@ if(!empty($devices)){
             trigger_error('Wrong SQL: '.$query.' Error: '.$local->error,E_USER_ERROR);	
         } else {
             if($result->num_rows >= 1) {
-				
 				while($row = mysqli_fetch_assoc($result)) {
-                    echo "          <tr> 
+                    echo "          <tr>
 										<td>".$row['dtime']."</td>";
 										if ($row['inv'] == "10000") {
 											echo "<td class=\"text-danger\">".$row['inv']."</td>";
@@ -125,8 +127,10 @@ if(!empty($devices)){
 											echo "<td>".number_format($row['ping'],1)."</td>";
 										}
 										echo "
+										<td>".$row['revision']."</td>
 										<td>".$row['reads']."</td>
 									 </tr>";
+				    $c+=$row['reads'];
 				}
 			}
 		}
@@ -147,10 +151,17 @@ if(!empty($devices)){
 										<td>TTY</td>
 										<td>SOCKET</td>
 										<td>PING</td>
+										<td>REV</td>
 										<td>CARDS</td>
 							        </tr>
 							    </tfoot>
 							</table>
+							<div class=\"col-sm-6\">
+							    <h4 style=\"font-weight:700;margin-left:-10px;\">Clocks: ".$z."</h4>
+							</div>
+							<div class=\"col-sm-6\">
+							    <h4 class=\"fr\" style=\"font-weight:700;margin-right:-10px;\">Total card reads: ".$c."</h4>
+							</div>
 						</div>
 					</div>";
 }

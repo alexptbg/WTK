@@ -73,9 +73,12 @@ if($result === false) {
 		    <!-- Main navigation -->
 		    <ul id="side-nav" class="main-menu navbar-collapse collapse">
 			    <li><a href="index.php"><i class="icon-gauge"></i><span class="title">Dashboard</span></a></li>
+			    <li><a href="watch.php" target="_blank"><i class="icon-location"></i><span class="title">Clocks Location</span></a></li>
+			    <?php if ($user_settings['level'] > 10): ?>
 			    <li class="has-sub"><a href="javascript:void(0);"><i class="icon-target"></i><span class="title">Tools</span></a>
 				    <ul class="nav collapse">
 					    <li><a href="rtu_tools.php"><span class="title">RTU Tools</span></a></li>
+					    <li><a href="rtu_input.php"><span class="title">RTU Input</span></a></li>
 				    </ul>
 			    </li>
 			    <li class="has-sub active"><a href="javascript:void(0);"><i class="icon-cog"></i><span class="title">Settings</span></a>
@@ -84,7 +87,7 @@ if($result === false) {
 					    <li><a href="settings_users.php"><span class="title">Users</span></a></li>
 				    </ul>
 			    </li>
-
+                <?php endif; ?>
 		    </ul>
 		    <!-- /main navigation -->		
         </div>
@@ -213,11 +216,12 @@ if($result === false) {
 									    <thead>
 										    <tr>
 											    <th>INV</th>
+											    <th>PLACE</th>
 											    <th>IP ADDRESS</th>
 											    <th>SERIAL NO</th>
 											    <th>RTU</th>
 											    <th>GRP</th>
-											    <th>BUILDING</th>
+											    <th>BUILD.</th>
 											    <th>FLOOR</th>
 											    <th>GROUP</th>
 											    <th>ART NO</th>
@@ -231,6 +235,7 @@ if($result === false) {
 											echo "
 										    <tr class=\"gradeX\">
 											    <td>".$clock['inv']."</td>
+											    <td>".$clock['place']."</td>
 											    <td>".$clock['ip']."</td>
 											    <td>".strtoupper($clock['serialnumber'])."</td>
 											    <td>".$clock['RTU_GRP']."</td>
@@ -286,11 +291,12 @@ if($result === false) {
 									    <tfoot>
 										    <tr>
 											    <td>INV</td>
+											    <td>PLACE</td>
 											    <td>IP ADDRESS</td>
 											    <td>SERIAL NO</td>
 											    <td>RTU</td>
 											    <td>GRP</td>
-											    <td>BUILDING</td>
+											    <td>BUILD.</td>
 											    <td>FLOOR</td>
 											    <td>GROUP</td>
 											    <td>ART NO</td>
@@ -439,19 +445,19 @@ if($result === false) {
 			            {
 				            extend: 'copyHtml5',
 				            exportOptions: {
-					            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+					            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
 				            }
 			            },
 			            {
 				            extend: 'excelHtml5',
 				            exportOptions: {
-					            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+					            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
 				            }
 			            },
 			            {
 				            extend: 'pdfHtml5',
 				            exportOptions: {
-					            columns: [ 0, 1, 2, 3, 4, 5, 6 ,7 ,8, 9 ]
+					            columns: [ 0, 1, 2, 3, 4, 5, 6 ,7 ,8, 9, 10 ]
 				            },
                             customize: function(doc) {
                                 doc.defaultStyle.fontSize = 8;
@@ -461,6 +467,7 @@ if($result === false) {
 			            'colvis'
 		                ],
                         "aoColumns": [
+				            { "bSearchable": true, "bSortable": true },
 				            { "bSearchable": true, "bSortable": true },
 				            { "bSearchable": true, "bSortable": true },
 				            { "bSearchable": true, "bSortable": true },

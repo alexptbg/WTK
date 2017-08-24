@@ -7,6 +7,7 @@ include("../inc/config.php");
 check_login($local_settings['appname']);
 if(!empty($_POST)){
 	$inv = $_POST['inv'];
+	$place = $_POST['place'];
 	$ip = $_POST['ip'];
 	$serialnumber = $_POST['serialnumber'];
 	$RTU_GRP = $_POST['RTU_GRP'];
@@ -51,8 +52,8 @@ if(!empty($_POST)){
 		}
 		$data = array();
 		if (empty($errors)) {
-            $sql="INSERT INTO `devices` (inv,ip,serialnumber,RTU_GRP,GRP,building,floor,groupnr,art_no,track,mounted,mapx,mapy) 
-                  VALUES ('".$inv."','".$ip."','".$serialnumber."','".$RTU_GRP."','".$GRP."','".$building."','".$floor."','".$group."','".$art_no."','".$track."','".$mounted."','".$mapx."','".$mapy."')";
+            $sql="INSERT INTO `devices` (inv,ip,`place`,serialnumber,RTU_GRP,GRP,building,floor,groupnr,art_no,track,mounted,mapx,mapy) 
+                  VALUES ('".$inv."','".$ip."','".$place."','".$serialnumber."','".$RTU_GRP."','".$GRP."','".$building."','".$floor."','".$group."','".$art_no."','".$track."','".$mounted."','".$mapx."','".$mapy."')";
  
             if($local->query($sql) === false) {
                 trigger_error('Wrong SQL: '.$sql.' Error: '.$local->error,E_USER_ERROR);

@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 echo date("Y-m-d H:i:s")."<br/>";
 
-define('DB_SERVER','192.168.0.210'); // set database host
+define('DB_SERVER','127.0.0.1'); // set database host
 define('DB_USER','pi'); // set database user
 define('DB_PASS','a11543395'); // set database password
 define('DB_NAME','raspi'); // set database name
@@ -38,7 +38,7 @@ try {
 }
 $stmt = $dbh->prepare("SELECT * FROM PERSON_ID_MOD ORDER BY PIN ASC");
 $stmt->execute();
-$i=0;
+$i=1;
 $last = "";
 while ($row = $stmt->fetch()) {
     if ($last != $row['PIN']) {
@@ -66,6 +66,6 @@ $stamp = time();
 if($local->query("INSERT INTO `replica` (`datetime`,`timestamp`,`device`,`filter`,`value`) VALUES ('".$now."','".$stamp."','server','success','".$i."')") === false) {
     trigger_error('Wrong SQL: '.$sql.' Error: '.$local->error,E_USER_ERROR);
 } else {
-	header('Location: http://localhost/cron/replica.php');
+	header('Location: http://192.168.5.104/replica.php');
 }
 ?>

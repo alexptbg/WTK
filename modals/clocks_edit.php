@@ -19,6 +19,12 @@ if(!empty($_GET)) {
 		</div> 
 	</div>
 	<div class="form-group"> 
+		<label class="col-sm-3 control-label">PLACE</label> 
+		<div class="col-sm-9"> 
+			<input type="text" class="form-control validate[required]" name="place" id="place" value="<?php echo $device['place']; ?>" /> 
+		</div> 
+	</div>
+	<div class="form-group"> 
 		<label class="col-sm-3 control-label">INVENTORY NUMBER</label> 
 		<div class="col-sm-9"> 
 			<input type="text" class="form-control validate[required,custom[onlyNnumbers],custom[integer],min[10000],max[40000],minSize[5],maxSize[5]]" name="inv" id="inv" value="<?php echo $device['inv']; ?>" /> 
@@ -185,6 +191,7 @@ if(!empty($_GET)) {
       	e.preventDefault();
       	var id = jQuery("input[name='id']").val();
 		var inv = jQuery("input[name='inv']").val();
+		var place = jQuery("input[name='place']").val();
 		var ip = jQuery("input[name='ip']").val();
 		var serialnumber = jQuery("input[name='serialnumber']").val();
 		var RTU_GRP = jQuery("select[name='RTU_GRP']").val();
@@ -197,7 +204,7 @@ if(!empty($_GET)) {
         var mounted = jQuery("input[name='mounted']").val();
         var mapx = jQuery("input[name='mapx']").val();
         var mapy = jQuery("input[name='mapy']").val();
-        var datastr = 'id='+id+'&inv='+inv+'&ip='+ip+'&RTU_GRP='+RTU_GRP+'&GRP='+GRP+'&serialnumber='+serialnumber+'&building='+building+'&floor='+flor+'&groupnr='+groupnr+'&art_no='+art_no+'&track='+track+'&mounted='+mounted+'&mapx='+mapx+'&mapy='+mapy;
+        var datastr = 'id='+id+'&inv='+inv+'&place='+place+'&ip='+ip+'&RTU_GRP='+RTU_GRP+'&GRP='+GRP+'&serialnumber='+serialnumber+'&building='+building+'&floor='+flor+'&groupnr='+groupnr+'&art_no='+art_no+'&track='+track+'&mounted='+mounted+'&mapx='+mapx+'&mapy='+mapy;
         //console.log(datastr);
         send(datastr);
       } else {

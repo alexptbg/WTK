@@ -14,6 +14,12 @@ if($local->query($sql2) === false) {
 } else {
   $affected_rows = $local->affected_rows;
 }
+$sql3="DELETE FROM `back_status` WHERE `datetime` < DATE_SUB(NOW(), INTERVAL 4 DAY);";
+if($local->query($sql3) === false) {
+  trigger_error('Wrong SQL: '.$sql3.' Error: '.$local->error,E_USER_ERROR);
+} else {
+  $affected_rows = $local->affected_rows;
+}
 $now = date("Y-m-d H:i:s");
 $devices = array();
 $query3="SELECT * FROM `devices` WHERE `track`='1' ORDER BY `inv` ASC";

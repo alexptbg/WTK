@@ -52,7 +52,7 @@ if(!empty($devices)){
                         clock_log($row['inv'],$row['ip'],"warning","High temperature detected.");
 					}
 					//timestamp
-					if( (time()-$row['timestamp']) > 65) {
+					if( (time()-$row['timestamp']) > 75) {
 						clock_log($row['inv'],$row['ip'],"danger","Timestamp doesnt match.");
 					}
 					//shelltime

@@ -4,8 +4,9 @@ define('start',TRUE);
 include("../inc/db.php");
 include("../inc/functions.php");
 include("../inc/config.php");
+$slider_no = $_GET['slider_no'];
 $devices = array();
-$query="SELECT * FROM `devices` WHERE `track`='1' ORDER BY `inv` ASC";
+$query="SELECT * FROM `devices` WHERE `track`='1' AND `slider_no`='".$slider_no."' ORDER BY `inv` ASC";
 $result=$local->query($query);
 if($result === false) {
     trigger_error('Wrong SQL: '.$query.' Error: '.$local->error,E_USER_ERROR);
@@ -189,6 +190,7 @@ if(!empty($devices)){
                         "ttydevice" => $ttydevice,
                         "socket" => $socket,
                         "ping" => $ping,
+                        "revision" => $row['revision'],
                         "reads" => $row['reads'],
                         "template" => $template,
                         "spotcolor" => $spotcolor,
@@ -201,7 +203,7 @@ if(!empty($devices)){
 		}
         $z++;
 	}
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($data);
 }
-header('Content-Type: application/json; charset=utf-8');
-echo json_encode($data);
 ?>

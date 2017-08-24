@@ -8,6 +8,7 @@ check_login($local_settings['appname']);
 if(!empty($_POST)){
 	$id = $_POST['id'];
 	$inv = $_POST['inv'];
+	$place = $_POST['place'];
 	$ip = $_POST['ip'];
 	$serialnumber = $_POST['serialnumber'];
 	$RTU_GRP = $_POST['RTU_GRP'];
@@ -44,7 +45,7 @@ if(!empty($_POST)){
 		}
 		$data = array();
 		if (empty($errors)) {
-            $sql="UPDATE `devices` SET `inv`='".$inv."',`ip`='".$ip."',`RTU_GRP`='".$RTU_GRP."',`GRP`='".$GRP."',`building`='".$building."',`floor`='".$floor."',`groupnr`='".$group."',`art_no`='".$art_no."',`track`='".$track."',`mounted`='".$mounted."',`mapx`='".$mapx."',`mapy`='".$mapy."' 
+            $sql="UPDATE `devices` SET `inv`='".$inv."',`ip`='".$ip."',`place`='".$place."',`RTU_GRP`='".$RTU_GRP."',`GRP`='".$GRP."',`building`='".$building."',`floor`='".$floor."',`groupnr`='".$group."',`art_no`='".$art_no."',`track`='".$track."',`mounted`='".$mounted."',`mapx`='".$mapx."',`mapy`='".$mapy."' 
                   WHERE `id`='".$id."' AND `serialnumber`='".$serialnumber."'";
  
             if($local->query($sql) === false) {

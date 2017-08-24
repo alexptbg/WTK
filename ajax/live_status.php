@@ -46,6 +46,7 @@ if(!empty($status)){
 										<th>TTY</th>
 										<th>SOCKET</th>
 										<th>PING</th>
+										<th>REV</th>
 										<th>CARDS</th>
 									</tr> 
 								</thead> 
@@ -129,6 +130,7 @@ if(!empty($status)){
 											echo "<td>".number_format($single['ping'],1)."</td>";
 										}
 										echo "
+										<td>".$single['revision']."</td>
 										<td>".$single['reads']."</td>
 									 </tr>";
     }
@@ -148,6 +150,7 @@ if(!empty($status)){
 										<td>TTY</td>
 										<td>SOCKET</td>
 										<td>PING</td>
+										<td>REV</td>
 										<td>CARDS</td>
 							        </tr>
 							    </tfoot>

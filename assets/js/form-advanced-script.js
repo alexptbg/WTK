@@ -8,7 +8,9 @@ $(document).ready(function () {
 	$('#date-popup').datepicker({
 		keyboardNavigation: false,
 		forceParse: false,
-		todayHighlight: true
+		todayHighlight: true,
+        use24hours: true,
+        format: 'yyyy-mm-dd hh:mm:ss'
 	});
 
 	$('#year-view').datepicker({
@@ -16,39 +18,6 @@ $(document).ready(function () {
 		keyboardNavigation: false,
 		forceParse: false,
 		format: "mm/dd/yyyy"
-	});
-
-	var dragFixed = document.getElementById('drag-fixed');
-	noUiSlider.create(dragFixed, {
-		start: [40, 60],
-		behaviour: 'drag-fixed',
-		connect: true,
-		range: {
-			'min': 20,
-			'max': 80
-		}
-	});
-
-	var basicSlider = document.getElementById('basic-slider');
-	noUiSlider.create(basicSlider, {
-		start: 40,
-		behaviour: 'tap',
-		connect: 'upper',
-		range: {
-			'min': 20,
-			'max': 80
-		}
-	});
-
-	var rangeSlider = document.getElementById('range-slider');
-	noUiSlider.create(rangeSlider, {
-		start: [40, 60],
-		behaviour: 'drag',
-		connect: true,
-		range: {
-			'min': 20,
-			'max': 80
-		}
 	});
 
 	$(".select2").select2();
